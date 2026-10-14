@@ -1,0 +1,142 @@
+:root {
+  color-scheme: dark;
+  --bg: #090c10;
+  --surface-1: #11161c;
+  --surface-2: #171d25;
+  --surface-3: #202833;
+  --surface-inset: #0d1218;
+  --text: #e7ebef;
+  --text-muted: #a1aab5;
+  --text-subtle: #77828e;
+  --border: rgba(231, 235, 239, 0.075);
+  --border-strong: rgba(231, 235, 239, 0.14);
+
+  --accent-raw: #00e8ff;
+  --accent2-raw: #b026ff;
+  --accent: color-mix(in srgb, var(--accent-raw) 82%, white);
+  --accent-2: color-mix(in srgb, var(--accent2-raw) 74%, white);
+  --success: #66d99a;
+  --warning: #e7b45c;
+  --error: #ed7180;
+
+  --gauge-track: #1c242e;
+  --gauge-tick: #44505d;
+  --radius-lg: 15px;
+  --shadow-card: 0 18px 50px rgba(0, 0, 0, 0.16);
+  --font-sans: "Aptos", "Segoe UI Variable Text", "Segoe UI", sans-serif;
+  --font-numeric: "Bahnschrift", "Aptos", "Segoe UI Variable Text", sans-serif;
+
+  font-synthesis: none;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg: #edf1f4;
+    --surface-1: #fbfcfd;
+    --surface-2: #f2f5f7;
+    --surface-3: #e6ebef;
+    --surface-inset: #f5f7f9;
+    --text: #15202a;
+    --text-muted: #566573;
+    --text-subtle: #778592;
+    --border: rgba(21, 32, 42, 0.09);
+    --border-strong: rgba(21, 32, 42, 0.16);
+    --accent: color-mix(in srgb, var(--accent-raw) 62%, #173543);
+    --accent-2: color-mix(in srgb, var(--accent2-raw) 62%, #2a2140);
+    --success: #168052;
+    --warning: #986313;
+    --error: #bc3449;
+    --gauge-track: #e2e8ec;
+    --gauge-tick: #a6b1bb;
+    --shadow-card: 0 14px 40px rgba(37, 52, 65, 0.07);
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #edf1f4;
+  --surface-1: #fbfcfd;
+  --surface-2: #f2f5f7;
+  --surface-3: #e6ebef;
+  --surface-inset: #f5f7f9;
+  --text: #15202a;
+  --text-muted: #566573;
+  --text-subtle: #778592;
+  --border: rgba(21, 32, 42, 0.09);
+  --border-strong: rgba(21, 32, 42, 0.16);
+  --accent: color-mix(in srgb, var(--accent-raw) 62%, #173543);
+  --accent-2: color-mix(in srgb, var(--accent2-raw) 62%, #2a2140);
+  --success: #168052;
+  --warning: #986313;
+  --error: #bc3449;
+  --gauge-track: #e2e8ec;
+  --gauge-tick: #a6b1bb;
+  --shadow-card: 0 14px 40px rgba(37, 52, 65, 0.07);
+}
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+  background:
+    radial-gradient(circle at 18% -12%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 32rem),
+    radial-gradient(circle at 92% 4%, color-mix(in srgb, var(--accent-2) 5%, transparent), transparent 28rem),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-feature-settings: "kern" 1, "liga" 1;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input { font-family: inherit; }
+
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.button,
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-height: 34px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 620;
+  cursor: pointer;
+  transition: transform 140ms ease, background 140ms ease, border-color 140ms ease, opacity 140ms ease;
+}
+
+.button { padding: 0.42rem 0.72rem; }
+.icon-button { width: 34px; padding: 0; justify-content: center; }
+.button:hover:not(:disabled),
+.icon-button:hover:not(:disabled) { transform: translateY(-1px); border-color: var(--border-strong); background: var(--surface-3); }
+.button:disabled,
+.icon-button:disabled { opacity: 0.48; cursor: default; }
+.button.primary { border-color: transparent; background: var(--accent); color: #071216; box-shadow: 0 5px 16px color-mix(in srgb, var(--accent) 15%, transparent); }
+.button.primary:hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 88%, white); }
+.button.secondary { background: var(--surface-2); }
+.button.quiet { border-color: transparent; background: transparent; color: var(--text-muted); }
+.button.danger { border-color: color-mix(in srgb, var(--error) 25%, var(--border)); background: color-mix(in srgb, var(--error) 7%, transparent); color: var(--error); }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

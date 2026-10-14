@@ -1,0 +1,70 @@
+[package]
+name = "dualbond"
+version = "1.0.0"
+description = "DualBond — System-wide Multi-Link Internet Balancer"
+authors = ["bhutano"]
+license-file = "../LICENSE"
+edition = "2021"
+rust-version = "1.77.2"
+
+[[bin]]
+name = "dualbond"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-notification = "2"
+tauri-plugin-single-instance = "2"
+
+tokio = { version = "1", features = ["full"] }
+hyper = { version = "1", features = ["full"] }
+hyper-util = { version = "0.1", features = ["full"] }
+http = "1"
+http-body-util = "0.1"
+bytes = "1"
+rustls = "0.23"
+rustls-native-certs = "0.7"
+tokio-rustls = "0.26"
+socket2 = { version = "0.5", features = ["all"] }
+hickory-resolver = "0.24"
+rusqlite = { version = "0.31", features = ["bundled"] }
+sha2 = "0.10"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+wmi = "0.13"
+ipstack = "1.0.1"
+tun = { version = "0.8.14", features = ["async"] }
+rand = "0.10"
+
+[target.'cfg(windows)'.dependencies]
+windows-service = "0.8.1"
+windows = { version = "0.58", features = [
+  "Win32_Networking_NetworkListManager",
+  "Win32_System_Com",
+] }
+
+[dependencies.windows-sys]
+version = "0.59"
+features = [
+  "Win32_Foundation",
+  "Win32_NetworkManagement_IpHelper",
+  "Win32_NetworkManagement_Ndis",
+  "Win32_NetworkManagement_WiFi",
+  "Win32_Networking_WinSock",
+  "Win32_Storage_FileSystem",
+  "Win32_System_IO",
+  "Win32_System_Ioctl",
+  "Win32_System_Power",
+  "Win32_System_Threading",
+]
+
+# NOTA: versioni scelte per compilare a scaffold iniziale (§2 della spec).
+# Alla prima `cargo update` verificare che nessuna sia stata yanked e
+# allineare alle ultime minor disponibili.

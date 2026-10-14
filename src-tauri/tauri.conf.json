@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "DualBond",
+  "version": "1.0.0",
+  "identifier": "dev.bhutano.dualbond",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist",
+    "devUrl": "http://127.0.0.1:14301"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "DualBond",
+        "width": 1040,
+        "height": 780,
+        "minWidth": 720,
+        "minHeight": 620,
+        "decorations": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "icon": ["icons/icon.ico"],
+    "publisher": "bhutano",
+    "copyright": "Copyright 2026 bhutano. PolyForm Shield License 1.0.0.",
+    "licenseFile": "../LICENSE",
+    "resources": {
+      "resources/wintun.dll": "wintun.dll",
+      "../THIRD_PARTY_NOTICES.md": "THIRD_PARTY_NOTICES.md",
+      "../LICENSE": "LICENSE.txt",
+      "../third_party/wintun-prebuilt-binaries-license.txt": "wintun-prebuilt-binaries-license.txt"
+    },
+    "windows": {
+      "nsis": {
+        "installMode": "perMachine",
+        "installerHooks": "windows/installer-hooks.nsh"
+      }
+    }
+  }
+}

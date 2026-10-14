@@ -1,0 +1,52 @@
+# Ambiente isolato locale (vedi activate.ps1)
+.cargo-home/
+.npm-cache/
+
+# Node
+node_modules/
+dist/
+
+# Rust / Tauri
+src-tauri/target/
+src-tauri/gen/
+
+# IDE / OS
+.vscode/
+.idea/
+Thumbs.db
+
+# Download di prova lasciati da `dualbond download`/`download-multi`
+/src-tauri/*.bin
+
+# Cartelle di lavoro di assistenti AI / agenti (Claude Code, Codex, ecc.)
+.claude/
+.codex/
+.agents/
+.superpowers/
+.cursor/
+.aider*
+graphify-out/
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+.mcp.json
+
+# Segreti e dati locali: mai da committare
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+control.token
+service-config.json
+service-state.json
+*.sqlite
+*.sqlite-journal
+*.db
+*.log
+
+# Artefatti di build locali e download di prova
+.scratch-downloads/
+*.exe
+*.msi
