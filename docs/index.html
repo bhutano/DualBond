@@ -3,13 +3,94 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DualBond — All your connections, combined into one.</title>
+<title>DualBond — Combine Wi-Fi, Ethernet and phone tethering on Windows</title>
 <meta name="description" content="DualBond adds all your Internet connections together on Windows: Wi-Fi, Ethernet and phones on USB tethering. Free, public source code, no account.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://bhutano.github.io/DualBond/">
 <meta name="theme-color" content="#07070b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DualBond">
+<meta property="og:url" content="https://bhutano.github.io/DualBond/">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="it_IT">
 <meta property="og:title" content="DualBond — All your connections, combined into one.">
 <meta property="og:description" content="Plug in a phone. Join a Wi-Fi. DualBond adds them together.">
-<meta property="og:image" content="images/dashboard-en.png">
+<meta property="og:image" content="https://bhutano.github.io/DualBond/images/dashboard-en.png">
+<meta property="og:image:width" content="1820">
+<meta property="og:image:height" content="1295">
+<meta property="og:image:alt" content="DualBond showing the combined speed and each connection's speed">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DualBond — All your connections, combined into one.">
+<meta name="twitter:description" content="Plug in a phone. Join a Wi-Fi. DualBond adds them together.">
+<meta name="twitter:image" content="https://bhutano.github.io/DualBond/images/dashboard-en.png">
 <link rel="icon" href="images/logo.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://bhutano.github.io/DualBond/#app",
+      "name": "DualBond",
+      "url": "https://bhutano.github.io/DualBond/",
+      "description": "DualBond adds all your Internet connections together on Windows: Wi-Fi, Ethernet and phones on USB tethering. It balances the whole PC's traffic across every usable connection and splits big downloads into chunks fetched over different connections. Everything runs locally: no server, no cloud, no account.",
+      "applicationCategory": "UtilitiesApplication",
+      "applicationSubCategory": "Multi-link Internet / bandwidth aggregation",
+      "operatingSystem": "Windows 10, Windows 11 (64-bit)",
+      "processorRequirements": "x64",
+      "softwareVersion": "1.0.0",
+      "datePublished": "2026-10-14",
+      "inLanguage": ["en", "it"],
+      "downloadUrl": "https://github.com/bhutano/DualBond/releases/latest",
+      "installUrl": "https://github.com/bhutano/DualBond/releases/latest",
+      "image": "https://bhutano.github.io/DualBond/images/logo.png",
+      "screenshot": "https://bhutano.github.io/DualBond/images/dashboard-en.png",
+      "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": [
+        "System mode: per-flow load balancing of the whole PC across Wi-Fi, Ethernet and USB tethering",
+        "File accelerator: one download split into chunks over several connections, with byte-exact resume",
+        "Hot-plug: a phone plugged in joins in seconds",
+        "Metered links used only when they help",
+        "Fail-open: if no connection is usable, Windows keeps browsing normally",
+        "No server, no cloud, no account",
+        "English and Italian interface"
+      ],
+      "author": { "@type": "Person", "name": "bhutano", "url": "https://github.com/bhutano" },
+      "sameAs": ["https://github.com/bhutano/DualBond"]
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "DualBond",
+      "codeRepository": "https://github.com/bhutano/DualBond",
+      "programmingLanguage": ["Rust", "TypeScript", "Svelte"],
+      "runtimePlatform": "Windows 10/11 x64",
+      "license": "https://polyformproject.org/licenses/shield/1.0.0/",
+      "targetProduct": { "@id": "https://bhutano.github.io/DualBond/#app" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Do I need two phones?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. One phone plus your Wi-Fi is already two connections. More phones or Wi-Fi networks simply add more speed." } },
+        { "@type": "Question", "name": "Does it cost anything?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. It is free, with no account and no subscription. Your phone's own data plan still applies, of course." } },
+        { "@type": "Question", "name": "Is my traffic sent to someone's server?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Everything happens on your PC. There is no relay and no cloud: each connection goes out through the phone or Wi-Fi you chose, straight to the website." } },
+        { "@type": "Question", "name": "Will one video or one page load faster?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A single stream still uses one connection at a time. The gain shows when many things happen together, and in big downloads, which DualBond splits across all your connections." } },
+        { "@type": "Question", "name": "How is it different from Speedify or a bonding VPN?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Bonding services like Speedify send all your traffic through their own servers, usually for a subscription. DualBond has no server in between: each connection goes straight to the website. The trade-off: a single stream is not split across connections, while big downloads still are." } },
+        { "@type": "Question", "name": "Does it change anything in Windows?",
+          "acceptedAnswer": { "@type": "Answer", "text": "One thing. Windows normally disconnects your Wi-Fi as soon as you plug in a cable. DualBond tells Windows to keep every connection on, so they can add up. Uninstall it and the old setting comes back." } },
+        { "@type": "Question", "name": "Mac or Linux?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Not yet. DualBond is Windows 10 and 11 (64-bit) only for now." } }
+      ]
+    }
+  ]
+}
+</script>
 <style>
   :root {
     color-scheme: dark;
@@ -380,6 +461,9 @@
       <details><summary><span data-lang="en">Will one video or one page load faster?</span><span data-lang="it">Un singolo video o una pagina si caricano più velocemente?</span></summary>
         <p data-lang="en">A single stream still uses one connection at a time. The gain shows when many things happen together, and in big downloads, which DualBond splits across all your connections.</p>
         <p data-lang="it">Un singolo flusso usa comunque una connessione alla volta. Il vantaggio si vede quando succedono tante cose insieme, e nei download grandi, che DualBond divide su tutte le connessioni.</p></details>
+      <details><summary><span data-lang="en">How is it different from Speedify or a bonding VPN?</span><span data-lang="it">Che differenza c’è con Speedify o una VPN di bonding?</span></summary>
+        <p data-lang="en">Bonding services like Speedify send all your traffic through their own servers, usually for a subscription. DualBond has no server in between: each connection goes straight to the website. The trade-off: a single stream is not split across connections, while big downloads still are.</p>
+        <p data-lang="it">I servizi di bonding come Speedify fanno passare tutto il traffico dai loro server, di solito con un abbonamento. DualBond non ha nessun server in mezzo: ogni connessione va dritta al sito. Il compromesso: un singolo flusso non viene diviso tra le connessioni, i download grandi invece sì.</p></details>
       <details><summary><span data-lang="en">Does it change anything in Windows?</span><span data-lang="it">Cambia qualcosa in Windows?</span></summary>
         <p data-lang="en">One thing. Windows normally disconnects your Wi-Fi as soon as you plug in a cable. DualBond tells Windows to keep every connection on, so they can add up. Uninstall it and the old setting comes back.</p>
         <p data-lang="it">Una cosa sola. Di solito Windows stacca il Wi-Fi appena colleghi un cavo. DualBond gli dice di tenere accese tutte le connessioni, così possono sommarsi. Se lo disinstalli, torna l'impostazione di prima.</p></details>

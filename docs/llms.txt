@@ -1,0 +1,47 @@
+# DualBond
+
+> DualBond is a free Windows 10/11 (x64) app that adds all your Internet connections together — Wi-Fi, Ethernet and phones on USB tethering or hotspot. It balances the whole PC's traffic across every usable connection and splits big downloads into chunks fetched over different connections. Everything runs locally: no server, no cloud, no account. Source-available under the PolyForm Shield License 1.0.0. Interface in English and Italian.
+
+Key facts:
+
+- Platform: Windows 10 and 11, 64-bit only. No macOS or Linux version.
+- Price: free, no account, no subscription. Free to use at home, at school and at work.
+- Current version: 1.0.0 (first public release, October 2026).
+- Install: download `DualBond_<version>_x64-setup.exe` from https://github.com/bhutano/DualBond/releases/latest, or run in cmd/PowerShell: `powershell -ep bypass -c "irm https://raw.githubusercontent.com/bhutano/DualBond/main/install.ps1|iex"` (verifies the SHA-256 checksum).
+- Built with Rust, Tauri v2 and Svelte 5.
+
+How it works:
+
+- **System mode**: a background Windows service creates a Wintun virtual adapter, captures outbound IPv4 TCP/UDP traffic and assigns each new flow to a physical link (weighted least-connections, link health, metered cost). Each socket is pinned to the chosen adapter with `IP_UNICAST_IF`. One flow always stays on one link, so TLS, QUIC and games keep working; the gain shows when many flows run in parallel.
+- **File accelerator**: paste a direct HTTP(S) URL; the file is split into `Range` chunks, each bound to a different link, with work stealing, byte-exact resume after pause/crash/reboot and verification. This is what makes a single download faster than any single link.
+- Hot-plug (a phone plugged in joins in seconds), real Internet detection per link, metered links used only when they help, fail-open (if no link is usable, Windows keeps browsing normally).
+- The installer turns off Windows' "minimize simultaneous connections" policy so Wi-Fi stays on when Ethernet is plugged in; the previous value is restored on uninstall.
+
+What it is not:
+
+- Not "true bonding": without a server on the other side, one TCP connection cannot be split across ISPs. A single web page or video stream still uses one connection at a time.
+- Not a VPN and not a cloud relay. Compared with Speedify-style bonding (traffic through the vendor's servers, usually a subscription) or OpenMPTCProuter/MPTCP (needs your own VPS), DualBond needs no remote server. Closest relative: Connectify Dispatch (local per-connection load balancing).
+- System mode is IPv4 only; IPv6 keeps using the native path. The file accelerator needs a server that honours `Range` requests.
+
+## Docs
+
+- [README (English)](https://raw.githubusercontent.com/bhutano/DualBond/main/README.md): what it does, use cases, how it works, comparison table, limits, install, build from source, security notes
+- [README (Italiano)](https://raw.githubusercontent.com/bhutano/DualBond/main/README.it.md): same content in Italian
+- [Changelog](https://raw.githubusercontent.com/bhutano/DualBond/main/CHANGELOG.md): release notes
+- [Website](https://bhutano.github.io/DualBond/): product page with FAQ (English and Italian)
+
+## Download
+
+- [Latest release](https://github.com/bhutano/DualBond/releases/latest): Windows installer (NSIS) and SHA-256 checksum
+- [Install script](https://raw.githubusercontent.com/bhutano/DualBond/main/install.ps1): one-line PowerShell installer
+
+## License
+
+- [License](https://raw.githubusercontent.com/bhutano/DualBond/main/LICENSE): PolyForm Shield 1.0.0 — free to use, read, modify and build, including at work; selling it or offering a competing product or service requires a commercial license
+- [Commercial use](https://raw.githubusercontent.com/bhutano/DualBond/main/COMMERCIAL.md)
+- [Trademark](https://raw.githubusercontent.com/bhutano/DualBond/main/TRADEMARK.md)
+
+## Optional
+
+- [Source code](https://github.com/bhutano/DualBond): Rust backend in `src-tauri/src/` (network discovery and binding, download scheduler, system-balance service), Svelte UI in `src/`
+- [Third-party notices](https://raw.githubusercontent.com/bhutano/DualBond/main/THIRD_PARTY_NOTICES.md)

@@ -1,0 +1,16 @@
+# GitHub Pages: publish only the website, not the engineering notes kept in docs/.
+exclude:
+  - "*.md"
+  - milestone1-winapi-notes.md
+  - milestone3-notes.md
+  - milestone4-notes.md
+  - milestone5-notes.md
+  - milestone6-notes.md
+  - milestone7-8-notes.md
+  - release-0.1.2-session-notes.md
+  - release-0.1.3-session-notes.md
+  - release-1.0.0-session-notes.md
+  - roadmap-notes.md
+  - system-balance-brainstorm.md
+  - system-balance-roadmap.md
+  - system-balance-spec.md
