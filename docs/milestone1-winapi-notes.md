@@ -94,7 +94,7 @@ l'ordine byte di `IP_UNICAST_IF` che la spec segnala come "l'errore più
 comune in assoluto").
 
 I sorgenti completi delle dipendenze erano già presenti in
-`D:\SignalBuster\DualBond\.cargo-home\registry\src\index.crates.io-1949cf8c6b5b557f\`
+`.cargo-home\registry\src\index.crates.io-1949cf8c6b5b557f\`
 (fetch precedente), quindi niente da scaricare: si può `grep`/`Read`
 direttamente lì. Versione pinnata in `Cargo.toml`: `windows-sys = "0.59"`.
 

@@ -242,10 +242,10 @@ mod tests {
     #[test]
     fn first_seen_creates_with_auto_name_as_display_name_and_first_palette_color() {
         let reg = LinkRegistry::open_in_memory().unwrap();
-        let id = reg.upsert_seen("usb:18d1:4ee7:abc", "usb", Some("moto g84 5G"), "phone", false, 100).unwrap();
+        let id = reg.upsert_seen("usb:18d1:4ee7:abc", "usb", Some("Android phone"), "phone", false, 100).unwrap();
 
-        assert_eq!(id.display_name, "moto g84 5G");
-        assert_eq!(id.auto_name.as_deref(), Some("moto g84 5G"));
+        assert_eq!(id.display_name, "Android phone");
+        assert_eq!(id.auto_name.as_deref(), Some("Android phone"));
         assert_eq!(id.color, COLOR_PALETTE[0]);
         assert!(id.enabled, "una nuova connessione deve entrare automaticamente nel pool");
         assert_eq!(id.first_seen, 100);
