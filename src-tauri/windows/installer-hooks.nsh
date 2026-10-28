@@ -1,6 +1,21 @@
 !macro NSIS_HOOK_PREINSTALL
   DetailPrint "Arresto del servizio DualBond esistente"
   nsExec::ExecToLog 'sc.exe stop DualBondService'
+  ; sc stop ritorna subito: il processo del servizio tiene ancora bloccato
+  ; dualbond.exe per qualche istante e in modalità silenziosa (/S) NSIS
+  ; salterebbe la copia del file senza errori, lasciando installata la
+  ; versione vecchia. Aspettiamo (max 20 s) che il processo esca davvero.
+  StrCpy $R9 0
+  dualbond_wait_service_exit:
+    nsExec::ExecToStack 'cmd.exe /c tasklist /FI "IMAGENAME eq dualbond.exe" /FI "SESSION eq 0" /NH | find /I "dualbond.exe"'
+    Pop $0
+    Pop $1
+    StrCmp $0 "0" 0 dualbond_service_exited
+    IntOp $R9 $R9 + 1
+    IntCmp $R9 40 dualbond_service_exited
+    Sleep 500
+    Goto dualbond_wait_service_exit
+  dualbond_service_exited:
   nsExec::ExecToLog 'sc.exe delete DualBondService'
 !macroend
 
