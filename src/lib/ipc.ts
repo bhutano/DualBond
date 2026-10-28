@@ -139,6 +139,10 @@ export function refreshSystemLinks(): Promise<SystemBalanceStatus> {
   return invoke("refresh_system_links");
 }
 
+export function startSystemService(): Promise<void> {
+  return invoke("start_system_service");
+}
+
 export function setSystemLinkEnabled(key: string, enabled: boolean): Promise<SystemBalanceStatus> {
   return invoke("set_system_link_enabled", { key, enabled });
 }

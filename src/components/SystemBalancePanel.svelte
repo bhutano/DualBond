@@ -194,7 +194,19 @@
     </div>
   </div>
 
-  {#if status?.lastError}
+  {#if status && !status.serviceAvailable}
+    <div class="system-error" role="alert">
+      <Icon name="activity" size={17} />
+      <div>
+        <strong>{t("Il servizio DualBond è fermo.")}</strong>
+        <span>{t("Le connessioni vengono rilevate dal servizio di sistema: finché è fermo l'elenco resta vuoto.")}</span>
+        {#if systemBalance.startError}<span>{systemBalance.startError}</span>{/if}
+      </div>
+      <button class="service-start" type="button" onclick={() => void systemBalance.startService()} disabled={systemBalance.busy}>
+        {t("Avvia servizio")}
+      </button>
+    </div>
+  {:else if status?.lastError}
     <div class="system-error" role="alert">
       <Icon name="activity" size={17} />
       <div><strong>{errorTitle()}</strong><span>{status.lastError}</span></div>
@@ -212,6 +224,8 @@
       </div>
       {#if !status}
         <span class="link-placeholder">{t("Lettura del servizio…")}</span>
+      {:else if !status.serviceAvailable}
+        <span class="link-placeholder">{t("In attesa del servizio DualBond…")}</span>
       {:else if feedLinks.length === 0}
         <span class="link-placeholder">{t("Nessuna connessione Internet stabile disponibile.")}</span>
       {:else}
@@ -343,6 +357,10 @@
   .system-error strong, .system-error span { display: block; }
   .system-error strong { font-size: 0.82rem; }
   .system-error span { margin-top: 0.18rem; color: var(--text-muted); font-size: 0.74rem; }
+  .system-error > div { flex: 1 1 auto; min-width: 0; }
+  .service-start { flex: none; align-self: center; padding: 0.35rem 0.8rem; border: 1px solid color-mix(in srgb, var(--error) 45%, transparent); border-radius: 8px; background: transparent; color: var(--error); font-size: 0.74rem; font-weight: 600; cursor: pointer; }
+  .service-start:hover:not(:disabled) { background: color-mix(in srgb, var(--error) 12%, transparent); }
+  .service-start:disabled { opacity: 0.55; cursor: default; }
 
   /* ---- palco: link a sinistra, linee al centro, totale a destra ---- */
   .stage {

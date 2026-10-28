@@ -33,11 +33,21 @@
     WriteRegStr HKLM "Software\DualBond" "WcmMinimizeConnectionsPrevious" $2
   ${EndIf}
   WriteRegDWORD HKLM "SOFTWARE\Policies\Microsoft\Windows\WcmSvc\GroupPolicy" "fMinimizeConnections" 0
+
+  ; Se il servizio va in crash senza lasciare traccia nel log (es. abort del
+  ; processo) Windows salva un minidump locale: resta sul PC, non viene
+  ; inviato da nessuna parte, al massimo 3 file.
+  DetailPrint "Abilito i report di crash locali di DualBond"
+  WriteRegExpandStr HKLM "SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\dualbond.exe" "DumpFolder" "%ProgramData%\DualBond\crashdumps"
+  WriteRegDWORD HKLM "SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\dualbond.exe" "DumpCount" 3
+  WriteRegDWORD HKLM "SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\dualbond.exe" "DumpType" 1
 !macroend
 
 !macro NSIS_HOOK_PREUNINSTALL
   DetailPrint "Rimozione del servizio DualBond"
   nsExec::ExecToLog '"$INSTDIR\dualbond.exe" remove-service'
+  SetRegView 64
+  DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\dualbond.exe"
 
   DetailPrint "Ripristino della gestione connessioni di Windows"
   SetRegView 64

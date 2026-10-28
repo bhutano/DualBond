@@ -1,6 +1,6 @@
 [package]
 name = "dualbond"
-version = "1.0.0"
+version = "1.0.1"
 description = "DualBond — System-wide Multi-Link Internet Balancer"
 authors = ["bhutano"]
 license-file = "../LICENSE"
@@ -63,6 +63,8 @@ features = [
   "Win32_System_Ioctl",
   "Win32_System_Power",
   "Win32_System_Threading",
+  "Win32_UI_Shell",
+  "Win32_UI_WindowsAndMessaging",
 ]
 
 # NOTA: versioni scelte per compilare a scaffold iniziale (§2 della spec).

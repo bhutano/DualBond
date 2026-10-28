@@ -8,5 +8,5 @@ pub mod service;
 pub mod socket;
 pub mod store;
 
-pub use client::SystemBalanceClient;
+pub use client::{start_service_elevated, SystemBalanceClient};
 pub use model::SystemBalanceStatus;

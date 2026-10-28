@@ -106,3 +106,36 @@ impl SystemBalanceClient {
         }
     }
 }
+
+/// Avvia il servizio di sistema chiedendo l'elevazione (UAC): serve quando il
+/// servizio si è fermato e Windows non lo ha ancora fatto ripartire. Non
+/// attende la fine: l'interfaccia vede il servizio tornare tramite il polling.
+pub fn start_service_elevated() -> io::Result<()> {
+    use windows_sys::Win32::UI::Shell::ShellExecuteW;
+    use windows_sys::Win32::UI::WindowsAndMessaging::SW_HIDE;
+
+    fn wide(value: &str) -> Vec<u16> {
+        value.encode_utf16().chain(std::iter::once(0)).collect()
+    }
+    let verb = wide("runas");
+    let file = wide("sc.exe");
+    let parameters = wide(&format!("start {}", super::service::SERVICE_NAME));
+    // SAFETY: tutte le stringhe sono UTF-16 terminate da zero e restano vive
+    // per tutta la durata della chiamata.
+    let result = unsafe {
+        ShellExecuteW(
+            std::ptr::null_mut(),
+            verb.as_ptr(),
+            file.as_ptr(),
+            parameters.as_ptr(),
+            std::ptr::null(),
+            SW_HIDE,
+        )
+    };
+    // ShellExecuteW restituisce un valore > 32 in caso di successo.
+    if result as isize > 32 {
+        Ok(())
+    } else {
+        Err(io::Error::last_os_error())
+    }
+}

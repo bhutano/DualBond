@@ -50,6 +50,10 @@ const EN: Record<string, string> = {
   "Scansione non riuscita": "Scan failed",
   // SystemBalancePanel
   "Servizio non disponibile": "Service unavailable",
+  "Il servizio DualBond è fermo.": "The DualBond service is stopped.",
+  "Le connessioni vengono rilevate dal servizio di sistema: finché è fermo l'elenco resta vuoto.": "Connections are detected by the system service: while it is stopped the list stays empty.",
+  "Avvia servizio": "Start service",
+  "In attesa del servizio DualBond…": "Waiting for the DualBond service…",
   "Tutto il PC è bilanciato": "The whole PC is balanced",
   "Attivazione in corso…": "Activating…",
   "Intervento richiesto": "Action required",

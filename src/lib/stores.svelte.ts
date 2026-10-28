@@ -12,6 +12,7 @@ import {
   setSystemBalanceEnabled,
   setSystemLinkEnabled,
   setSystemLinkMetered,
+  startSystemService,
   type StatsSnapshot,
   type SystemBalanceStatus,
 } from "./ipc";
@@ -75,6 +76,28 @@ class SystemBalanceStore {
     } finally {
       this.busy = false;
       await this.poll();
+    }
+  }
+
+  /** Messaggio dell'ultimo tentativo di avvio del servizio non riuscito
+   * (es. richiesta UAC annullata). */
+  startError = $state<string | null>(null);
+
+  async startService() {
+    if (this.busy) return;
+    this.busy = true;
+    this.startError = null;
+    try {
+      await startSystemService();
+      // il servizio impiega qualche secondo ad aprire il canale di controllo
+      for (let attempt = 0; attempt < 10 && !this.status?.serviceAvailable; attempt += 1) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await this.poll();
+      }
+    } catch (error) {
+      this.startError = String(error);
+    } finally {
+      this.busy = false;
     }
   }
 

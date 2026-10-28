@@ -59,6 +59,11 @@ async fn refresh_system_links(
 }
 
 #[tauri::command]
+fn start_system_service() -> Result<(), String> {
+    system_balance::start_service_elevated().map_err(|error| error.to_string())
+}
+
+#[tauri::command]
 async fn set_system_link_enabled(
     state: tauri::State<'_, AppState>,
     key: String,
@@ -483,6 +488,7 @@ fn main() {
             get_system_balance_status,
             set_system_balance_enabled,
             refresh_system_links,
+            start_system_service,
             set_system_link_enabled,
             set_system_link_metered,
         ])

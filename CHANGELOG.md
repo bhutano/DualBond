@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1 — service reliability
+
+- **The system service restarts by itself** after a crash or an unexpected stop (Windows recovery actions: retry after 5 s, 15 s, 60 s). Before, a crash left it stopped until the next reboot, and the app showed no connections.
+- **Clear notice when the service is stopped**, with a *Start service* button (asks for administrator rights), instead of an empty connection list.
+- Panics in the service are now written to `service.log` with a backtrace; if the process still dies without a trace, Windows keeps a local minidump in `%ProgramData%\DualBond\crashdumps` (at most 3, never uploaded).
+- `service.log` is rotated at 10 MB (one backup), and per-connection messages moved to debug level: before, it grew without limit (80+ MB).
+
 ## 1.0.0 — first public release
 
 DualBond adds all your Internet connections together on Windows (Wi-Fi, Ethernet, phones on USB tethering).

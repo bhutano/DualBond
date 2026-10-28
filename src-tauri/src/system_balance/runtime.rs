@@ -457,7 +457,7 @@ async fn handle_tcp(runtime: Arc<ServiceRuntime>, mut inbound: ipstack::IpStackT
         tracing::warn!(%remote, "flusso TCP rifiutato: nessun link disponibile");
         return;
     };
-    tracing::info!(
+    tracing::debug!(
         %remote,
         link = %link.key,
         interface = %link.name,
@@ -467,7 +467,7 @@ async fn handle_tcp(runtime: Arc<ServiceRuntime>, mut inbound: ipstack::IpStackT
     );
     let mut outbound = match connect_tcp(link.if_index, link.local_ip, remote).await {
         Ok(outbound) => {
-            tracing::info!(%remote, link = %link.key, "connessione TCP stabilita");
+            tracing::debug!(%remote, link = %link.key, "connessione TCP stabilita");
             outbound
         }
         Err(error) => {
