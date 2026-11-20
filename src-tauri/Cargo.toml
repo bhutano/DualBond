@@ -1,6 +1,6 @@
 [package]
 name = "dualbond"
-version = "1.0.1"
+version = "1.0.2"
 description = "DualBond — System-wide Multi-Link Internet Balancer"
 authors = ["bhutano"]
 license-file = "../LICENSE"

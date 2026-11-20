@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2 — WebView2 rendering
+
+- Pause WebView2 rendering while DualBond is minimized or hidden in the notification area, and resume rendering when the window is restored.
+
 ## 1.0.1 — service reliability
 
 - **The system service restarts by itself** after a crash or an unexpected stop (Windows recovery actions: retry after 5 s, 15 s, 60 s). Before, a crash left it stopped until the next reboot, and the app showed no connections.

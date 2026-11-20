@@ -339,6 +339,30 @@ fn open_download_folder(app: tauri::AppHandle) -> Result<(), String> {
     Ok(())
 }
 
+#[cfg(windows)]
+fn set_webview_visible(window: &tauri::WebviewWindow, visible: bool) {
+    // La visibilità della WebView è indipendente da quella della finestra host.
+    let webview = window.as_ref();
+    let result = if visible {
+        webview.show()
+    } else {
+        webview.hide()
+    };
+    if let Err(error) = result {
+        tracing::warn!(%error, visible, "Failed to set WebView2 visibility");
+    }
+}
+
+fn show_main_window(app: &tauri::AppHandle) {
+    if let Some(window) = app.get_webview_window("main") {
+        let _ = window.show();
+        let _ = window.unminimize();
+        #[cfg(windows)]
+        set_webview_visible(&window, true);
+        let _ = window.set_focus();
+    }
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     match args.get(1).map(String::as_str) {
@@ -383,20 +407,38 @@ fn main() {
         // `system-service` escono prima del builder, quindi l'istanza singola
         // riguarda esclusivamente la UI per sessione utente.
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
-            if let Some(window) = app.get_webview_window("main") {
-                let _ = window.show();
-                let _ = window.unminimize();
-                let _ = window.set_focus();
-            }
+            show_main_window(app);
         }))
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_notification::init())
         .on_window_event(|window, event| {
-            if window.label() == "main" {
-                if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+            if window.label() != "main" {
+                return;
+            }
+            match event {
+                tauri::WindowEvent::CloseRequested { api, .. } => {
                     api.prevent_close();
-                    let _ = window.hide();
+                    if let Err(error) = window.hide() {
+                        tracing::warn!(%error, "Failed to hide the main window");
+                        return;
+                    }
+                    #[cfg(windows)]
+                    if let Some(webview_window) = window.app_handle().get_webview_window("main") {
+                        set_webview_visible(&webview_window, false);
+                    }
                 }
+                #[cfg(windows)]
+                tauri::WindowEvent::Resized(_) => {
+                    // Windows invia WM_SIZE anche quando la finestra viene minimizzata o ripristinata.
+                    if let (Ok(visible), Ok(minimized), Some(webview_window)) = (
+                        window.is_visible(),
+                        window.is_minimized(),
+                        window.app_handle().get_webview_window("main"),
+                    ) {
+                        set_webview_visible(&webview_window, visible && !minimized);
+                    }
+                }
+                _ => {}
             }
         })
         .setup(|app| {
@@ -419,13 +461,7 @@ fn main() {
                     .menu(&tray_menu)
                     .show_menu_on_left_click(false)
                     .on_menu_event(|app, event| match event.id().as_ref() {
-                        "show" => {
-                            if let Some(window) = app.get_webview_window("main") {
-                                let _ = window.show();
-                                let _ = window.unminimize();
-                                let _ = window.set_focus();
-                            }
-                        }
+                        "show" => show_main_window(app),
                         "quit" => app.exit(0),
                         _ => {}
                     })
@@ -436,11 +472,7 @@ fn main() {
                             ..
                         } = event
                         {
-                            if let Some(window) = tray.app_handle().get_webview_window("main") {
-                                let _ = window.show();
-                                let _ = window.unminimize();
-                                let _ = window.set_focus();
-                            }
+                            show_main_window(tray.app_handle());
                         }
                     })
                     .build(app)?;
